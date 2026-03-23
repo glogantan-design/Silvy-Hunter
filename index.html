@@ -265,7 +265,7 @@
 
 <div id="explosion-container">
     <video id="explosion-video" playsinline muted>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-fireball-explosion-in-the-center-of-the-screen-4740-preview.mp4" type="video/mp4">
+        <source src="explosion.mp4" type="video/mp4">
     </video>
 </div>
 
@@ -276,25 +276,17 @@
     let bgMusic;
     let initRetries = 0;
     
-    const DEFAULT_SILVY_IMG = 'https://www.pngkey.com/png/full/10-104446_sylvester-the-cat-sylvester-cat.png';
+    const DEFAULT_SILVY_IMG = 'Sylvester.png';
     
     let targetImageUrl = DEFAULT_SILVY_IMG;
     let targetName = 'SILVY';
     let systemReady = false;
-    let explosionSound;
-
-    // --- ASSETS CONFIGURATION ---
-    const EXPLOSION_SOUND_URL = "silvy-explosion.mp3"; // <--- PASTE YOUR EXPLOSION SOUND LINK HERE
-    // ----------------------------
 
     // Initialize UI
     document.addEventListener('DOMContentLoaded', () => {
         const nameInput = document.getElementById('target-name-input');
         if (nameInput) nameInput.value = targetName;
         syncTargetData();
-        
-        // Pre-load explosion sound
-        explosionSound = new Audio(EXPLOSION_SOUND_URL);
     });
 
     function handleTargetUpload(event) {
@@ -363,7 +355,7 @@
     }
 
     const musicFiles = [
-        "Zap Beat.mp3"
+        "Gone Beyond.mp3"
     ];
 
     function log(msg) {
@@ -692,12 +684,6 @@
     function executePunch() {
         if(bgMusic) bgMusic.pause();
         
-        // Play explosion sound effect
-        if (explosionSound) {
-            explosionSound.currentTime = 0; // Restart from beginning
-            explosionSound.play().catch(e => log("Sound playback restricted."));
-        }
-        
         const explosionContainer = document.getElementById('explosion-container');
         const explosionVideo = document.getElementById('explosion-video');
         
@@ -706,8 +692,8 @@
         document.body.style.animation = "shake-anim 0.1s infinite";
 
         explosionContainer.style.display = 'flex';
-        explosionVideo.muted = false; // Unmute if sound exists in video
-        explosionVideo.play().catch(e => log("Video playback restricted."));
+        explosionVideo.play().catch(e => log("Video Error: " + e));
+    
 
         explosionVideo.onended = () => {
             explosionContainer.style.display = 'none';
@@ -733,3 +719,4 @@
 
 </body>
 </html>
+
